@@ -48,7 +48,7 @@ public class StopWords {
   public StopWords() {
     File arquivo;
     try {
-      arquivo = new File("stopWordsList.txt");
+      arquivo = new File("StopWords.txt");
       Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext()) {
         String linha = scanner.nextLine();
