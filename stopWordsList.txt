@@ -218,72 +218,71 @@ terão
 teria
 teríamos
 teriam
-    aonde
-    ao
-    à
-    aquela
-    aquelas
-    aqueles
-    aquilo
-    apenas
-    assim
-    até
-    cada
-    com
-    como
-    contra
-    quando
-    enquanto
-    entre
-    errada
-    essas
-    essas
-    este
-    estes
-    esta
-    essa
-    essas
-    faz
-    faziam
-    feito
-    foi
-    há
-    irmão
-    isso
-    isto
-    ja
-    já
-    lá
-    mais
-    melhor
-    mesmo
-    nem
-    nunca
-    para
-    porém
-    que
-    quem
-    seja
-    se
-    se
-    sem
-    sempre
-    sendo
-    somente
-    tanta
-    tanto
-    tantos
-    tantas
-    tem
-    tendo
-    tanta
-    tal
-    também
-    tanto
-    todas
-    todas
-    tudo
-    um
-    uma
+aonde
+ao
+à
+aquela
+aquelas
+aqueles
+aquilo
+apenas
+assim
+até
+cada
+com
+como
+contra
+quando
+enquanto
+entre
+errada
+essas
+essas
+este
+estes
+esta
+essa
+essas
+faz
+faziam
+feito
+foi
+há
+irmão
+isso
+isto
+ja
+já
+lá
+mais
+melhor
+mesmo
+nem
+nunca
+para
+porém
+que
+quem
+seja
+se
+sem
+sempre
+sendo
+somente
+tanta
+tanto
+tantos
+tantas
+tem
+tendo
+tanta
+tal
+também
+tanto
+todas
+todas
+tudo
+um
+uma
 
 
