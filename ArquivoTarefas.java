@@ -7,7 +7,7 @@ import java.util.Comparator;
 public class ArquivoTarefas extends Arquivo<Tarefa> {
     /* Instanciando o Objeto "ArvoreBMais" */
     ArvoreBMais<ParIDcIDt> arvoreB;
-    ArvoreBMais<ParIDEtiquetacID> arvoreB2;
+    ArvoreBMais<ParIDRotulocID> arvoreB2;
 
     /*
      * Instanciando o Objeto "StopWords" que representa o centro de atividades
@@ -20,7 +20,7 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         super(Tarefa.class.getConstructor(), "arquivoTarefas");
         try {
             arvoreB = new ArvoreBMais<>(ParIDcIDt.class.getConstructor(), 5, "./dados/ArvoreTarefas");
-            arvoreB2 = new ArvoreBMais<>(ParIDEtiquetacID.class.getConstructor(), 5, "./dados/ArvoreTarefasEtiquetas");
+            arvoreB2 = new ArvoreBMais<>(ParIDRotulocID.class.getConstructor(), 5, "./dados/ArvoreTarefasRotulos");
         } catch (Exception e) {
             throw new Exception("Erro na criação da Arvore");
         }
@@ -38,9 +38,9 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         tarefa.setId(id);
         System.out.println(id);
         arvoreB.create(new ParIDcIDt(tarefa.getIDCategoria(), id));
-        ArrayList<Integer> idEtiquetas = tarefa.getIDEtiquetas();
-        for (int i = 0; i < idEtiquetas.size(); i++) {
-            arvoreB2.create(new ParIDEtiquetacID(idEtiquetas.get(i), id));
+        ArrayList<Integer> idRotulos = tarefa.getIDRotulos();
+        for (int i = 0; i < idRotulos.size(); i++) {
+            arvoreB2.create(new ParIDRotulocID(idRotulos.get(i), id));
         }
         stopWords.inserir(tarefa.getNome(), id);
         return id;
@@ -58,11 +58,11 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         return t;
     }
 
-    public ArrayList<Tarefa> read(ParEtiquetaId parEtiquetaId) throws Exception {
+    public ArrayList<Tarefa> read(ParRotuloId parRotuloId) throws Exception {
 
         ArrayList<Tarefa> t = new ArrayList<>();
-        ArrayList<ParIDEtiquetacID> id = new ArrayList<>();
-        id = arvoreB2.read(new ParIDEtiquetacID(parEtiquetaId.getId()));
+        ArrayList<ParIDRotulocID> id = new ArrayList<>();
+        id = arvoreB2.read(new ParIDRotulocID(parRotuloId.getId()));
         for (int i = 0; i < id.size(); i++) {
             t.add(super.read(id.get(i).getId2()));
         }
@@ -98,9 +98,9 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                     ? arvoreB.delete(new ParIDcIDt(tarefa.getIDCategoria(), tarefa.getId()))
                     : false;
             String[] chaves = stopWords.stopWordsCheck(tarefa.getNome());
-            ArrayList<Integer> idEtiquetas = tarefa.getIDEtiquetas();
-            for (int i = 0; i < idEtiquetas.size(); i++) {
-                arvoreB2.delete(new ParIDEtiquetacID(idEtiquetas.get(i), tarefa.getId()));
+            ArrayList<Integer> idRotulos = tarefa.getIDRotulos();
+            for (int i = 0; i < idRotulos.size(); i++) {
+                arvoreB2.delete(new ParIDRotulocID(idRotulos.get(i), tarefa.getId()));
             }
             for (int i = 0; i < chaves.length; i++) {
                 chaves[i] = chaves[i].toLowerCase();
@@ -175,50 +175,50 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         return tarefas;
     }
 
-    public boolean updateEtiquetas(Tarefa tarefa, ArrayList<Integer> removed, ArrayList<Integer> added) {
+    public boolean updateRotulos(Tarefa tarefa, ArrayList<Integer> removed, ArrayList<Integer> added) {
         boolean result = false;
         try {
-            ArrayList<Integer> idEtiquetas = tarefa.getIDEtiquetas();
+            ArrayList<Integer> idRotulos = tarefa.getIDRotulos();
 
 
-            if (idEtiquetas.size() > 0) {
+            if (idRotulos.size() > 0) {
                 for (int i = 0; i < removed.size(); i++) {
                     boolean existe = false;
-                    for (int j = 0; j < idEtiquetas.size(); j++) {
-                        if (removed.get(i) == idEtiquetas.get(j)) {
+                    for (int j = 0; j < idRotulos.size(); j++) {
+                        if (removed.get(i) == idRotulos.get(j)) {
 
                             existe = true;
-                        } else if (j == idEtiquetas.size() - 1 && !existe) {
-                            System.out.println("Etiqueta não encontrada");
+                        } else if (j == idRotulos.size() - 1 && !existe) {
+                            System.out.println("Rotulo não encontrada");
                         }
                     }
                     if (existe) {
-                        arvoreB2.delete(new ParIDEtiquetacID(removed.get(i), tarefa.getId()));
-                        idEtiquetas.remove(removed.get(i));
+                        arvoreB2.delete(new ParIDRotulocID(removed.get(i), tarefa.getId()));
+                        idRotulos.remove(removed.get(i));
                     }
                 }
-            } else if (removed.size() > 0 && idEtiquetas.size() == 0) {
-                System.out.println("Não há etiquetas para serem removidas");
+            } else if (removed.size() > 0 && idRotulos.size() == 0) {
+                System.out.println("Não há rotulos para serem removidas");
             }
             for (int i = 0; i < added.size(); i++) {
                 boolean existe = false;
-                if (idEtiquetas.size() > 0) {
-                    for (int j = 0; j < idEtiquetas.size(); j++) {
-                        // System.out.println("added.get(" + i + "): " + added.get(i) + " - Etiqueta
-                        // Cadastrada: " + idEtiquetas.get(j));
-                        if (added.get(i) == idEtiquetas.get(j)) {
-                            System.out.println("Etiqueta já existente");
+                if (idRotulos.size() > 0) {
+                    for (int j = 0; j < idRotulos.size(); j++) {
+                        // System.out.println("added.get(" + i + "): " + added.get(i) + " - Rotulo
+                        // Cadastrada: " + idRotulos.get(j));
+                        if (added.get(i) == idRotulos.get(j)) {
+                            System.out.println("Rotulo já existente");
                             existe = true;
                         }
                     }
                 }
                 if (!existe) {
-                    idEtiquetas.add(added.get(i));
-                    arvoreB2.create(new ParIDEtiquetacID(added.get(i), tarefa.getId()));
+                    idRotulos.add(added.get(i));
+                    arvoreB2.create(new ParIDRotulocID(added.get(i), tarefa.getId()));
                 }
             }
             boolean update = super.update(tarefa);
-            tarefa.setIdEtiquetas(idEtiquetas);
+            tarefa.setIdRotulos(idRotulos);
             if (update) {
                 result = true;
             } else {

@@ -13,7 +13,7 @@ public class Tarefa implements Registro {
 
     // Chave Estrangeira
     private int idCategoria;
-    private ArrayList<Integer> idEtiquetas;
+    private ArrayList<Integer> idRotulos;
 
     // Atributos da classe Tarefa
     private String nome;
@@ -51,8 +51,8 @@ public class Tarefa implements Registro {
         this.idCategoria = idCategoria;
     }
 
-    public void setIdEtiquetas(ArrayList<Integer> idEtiquetas) {
-        this.idEtiquetas = idEtiquetas;
+    public void setIdRotulos(ArrayList<Integer> idRotulos) {
+        this.idRotulos = idRotulos;
     }
     // Fim Métodos Set's
 
@@ -85,8 +85,8 @@ public class Tarefa implements Registro {
         return this.idCategoria;
     }
 
-    public ArrayList<Integer> getIDEtiquetas() {
-        return this.idEtiquetas;
+    public ArrayList<Integer> getIDRotulos() {
+        return this.idRotulos;
     }
     // Fim Métodos Get's
 
@@ -102,9 +102,9 @@ public class Tarefa implements Registro {
             dos.writeByte(this.status);
             dos.writeByte(this.prioridade);
             dos.writeInt(this.idCategoria);
-            dos.writeInt(this.idEtiquetas.size());
-            for (int i = 0; i < this.idEtiquetas.size(); i++) {
-                dos.writeInt(this.idEtiquetas.get(i));
+            dos.writeInt(this.idRotulos.size());
+            for (int i = 0; i < this.idRotulos.size(); i++) {
+                dos.writeInt(this.idRotulos.get(i));
             }
         } catch (Exception e) {
             System.out.println("Deu bobs ao converter Tarefa para array de byte");
@@ -127,7 +127,7 @@ public class Tarefa implements Registro {
             this.idCategoria = dis.readInt();
             int size = dis.readInt();
             for (int i = 0; i < size; i++) {
-                this.idEtiquetas.add(dis.readInt());
+                this.idRotulos.add(dis.readInt());
             }
 
         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class Tarefa implements Registro {
         this.status = status;
         this.prioridade = prioridade;
         this.idCategoria = -1;
-        this.idEtiquetas = new ArrayList<Integer>();
+        this.idRotulos = new ArrayList<Integer>();
     }
 
     public Tarefa() {
@@ -153,7 +153,7 @@ public class Tarefa implements Registro {
         this.status = -1;
         this.prioridade = -1;
         this.idCategoria = -1;
-        this.idEtiquetas = new ArrayList<Integer>();
+        this.idRotulos = new ArrayList<Integer>();
     }
 
     // Fim Construtores

@@ -11,7 +11,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     CrudTarefas crudTarefas = new CrudTarefas();
     CrudCategorias crudCategorias = new CrudCategorias();
-    CrudEtiquetas crudEtiquetas = new CrudEtiquetas();
+    CrudRotulos crudRotulos = new CrudRotulos();
     /* Criando o Scanner e Resposta para ler a entrada do usuário */
     Scanner scanf = new Scanner(System.in);
     int resposta = 0;
@@ -24,7 +24,7 @@ public class Main {
         System.out.println("0) Sair......");
         System.out.println("1) Tarefas...");
         System.out.println("2) Categorias");
-        System.out.println("3) Etiquetas.");
+        System.out.println("3) Rotulos.");
 
         resposta = scanf.nextInt();
 
@@ -41,7 +41,7 @@ public class Main {
             crudCategorias.iniciarCategoria();
             break;
           case 3:
-            crudEtiquetas.iniciarEtiqueta();
+            crudRotulos.iniciarRotulo();
           default:
             System.out.println("Opção Inválida");
         }
@@ -57,14 +57,14 @@ public class Main {
   public static class CrudTarefas {
     public static ArquivoTarefas arquivoTarefas;
     public static ArquivoCategorias arquivoCategorias;
-    public static ArquivoEtiqueta arquivoEtiqueta;
+    public static ArquivoRotulo arquivoRotulo;
     Scanner scanf = new Scanner(System.in);
 
     // Método para iniciar as operações de tarefas
     public void iniciarTarefas() throws Exception {
       arquivoTarefas = new ArquivoTarefas();
       arquivoCategorias = new ArquivoCategorias();
-      arquivoEtiqueta = new ArquivoEtiqueta();
+      arquivoRotulo = new ArquivoRotulo();
       int resposta = 0;
       System.out.println("---TAREFAS---");
 
@@ -72,7 +72,7 @@ public class Main {
       System.out.println("2) Buscar...................");
       System.out.println("3) Alterar..................");
       System.out.println("4) Excluir..................");
-      System.out.println("5) Atualizar Etiqueta.......");
+      System.out.println("5) Atualizar Rotulo.......");
       System.out.println("6) Retornar ao Menu Anterior");
 
       resposta = scanf.nextInt();
@@ -91,7 +91,7 @@ public class Main {
           Deletar();
           break;
         case 5:
-          atualizarEtiqueta();
+          atualizarRotulo();
           break;
         case 6:
           break;
@@ -290,26 +290,26 @@ public class Main {
         // Evitando Buffer
         scanf.nextLine();
 
-        // Definindo etiquetas
-        int newEtiqueta = 1;
-        ArrayList<Etiqueta> etiquetas = new ArrayList<>();
-        ArrayList<Integer> posEtiquetasLista = new ArrayList<>();
-        System.out.println("Deseja adicionar alguma etiqueta ? (1 para sim, 0 para não)");
-        newEtiqueta = scanf.nextInt();
-        while (newEtiqueta == 1) {
-          System.out.println("Digite o índice da etiqueta que deseja adicionar a esta tarefa");
+        // Definindo rotulos
+        int newRotulo = 1;
+        ArrayList<Rotulo> rotulos = new ArrayList<>();
+        ArrayList<Integer> posRotulosLista = new ArrayList<>();
+        System.out.println("Deseja adicionar alguma rotulo ? (1 para sim, 0 para não)");
+        newRotulo = scanf.nextInt();
+        while (newRotulo == 1) {
+          System.out.println("Digite o índice da rotulo que deseja adicionar a esta tarefa");
           System.out.println();
-          etiquetas = arquivoEtiqueta.listar();
+          rotulos = arquivoRotulo.listar();
           System.out.println();
-          posEtiquetasLista.add(scanf.nextInt() - 1);
-          System.out.println("Deseja adicionar mais etiquetas? (1 para sim, 0 para não)");
-          newEtiqueta = scanf.nextInt();
+          posRotulosLista.add(scanf.nextInt() - 1);
+          System.out.println("Deseja adicionar mais rotulos? (1 para sim, 0 para não)");
+          newRotulo = scanf.nextInt();
         }
         ArrayList<Integer> aux = new ArrayList<>();
-        for (int i = 0; i < posEtiquetasLista.size(); i++) {
-          aux.add(etiquetas.get(posEtiquetasLista.get(i)).getId());
+        for (int i = 0; i < posRotulosLista.size(); i++) {
+          aux.add(rotulos.get(posRotulosLista.get(i)).getId());
         }
-        t.setIdEtiquetas(aux);
+        t.setIdRotulos(aux);
 
         /* Scanneando a Data de Inicio */
         LocalDate data = null;
@@ -362,8 +362,8 @@ public class Main {
       }
     }
 
-    // Interface de Adição de Etiqueta
-    public void atualizarEtiqueta() throws Exception {
+    // Interface de Adição de Rotulo
+    public void atualizarRotulo() throws Exception {
       String termo;
       int numeroTarefa = -1;
       Tarefa old = new Tarefa();
@@ -396,46 +396,46 @@ public class Main {
         e.printStackTrace();
       }
 
-      // Definindo etiquetas
-      int newEtiqueta = 1;
-      ArrayList<Etiqueta> etiquetas = new ArrayList<>();
-      ArrayList<Integer> posEtiquetasLista = new ArrayList<>();
-      System.out.println("Deseja remover etiquetas ? (1 para sim, 0 para não)");
-      newEtiqueta = scanf.nextInt();
-      while (newEtiqueta == 1) {
-        System.out.println("Digite o índice da etiqueta que deseja remover dessa tarefa");
+      // Definindo rotulos
+      int newRotulo = 1;
+      ArrayList<Rotulo> rotulos = new ArrayList<>();
+      ArrayList<Integer> posRotulosLista = new ArrayList<>();
+      System.out.println("Deseja remover rotulos ? (1 para sim, 0 para não)");
+      newRotulo = scanf.nextInt();
+      while (newRotulo == 1) {
+        System.out.println("Digite o índice da rotulo que deseja remover dessa tarefa");
         System.out.println();
-        etiquetas = arquivoEtiqueta.listar();
+        rotulos = arquivoRotulo.listar();
         System.out.println();
-        posEtiquetasLista.add(scanf.nextInt() - 1);
-        System.out.println("Deseja remover mais etiquetas? (1 para sim, 0 para não)");
-        newEtiqueta = scanf.nextInt();
+        posRotulosLista.add(scanf.nextInt() - 1);
+        System.out.println("Deseja remover mais rotulos? (1 para sim, 0 para não)");
+        newRotulo = scanf.nextInt();
       }
       ArrayList<Integer> removed = new ArrayList<>();
-      for (int i = 0; i < posEtiquetasLista.size(); i++) {
-        removed.add(etiquetas.get(posEtiquetasLista.get(i)).getId());
+      for (int i = 0; i < posRotulosLista.size(); i++) {
+        removed.add(rotulos.get(posRotulosLista.get(i)).getId());
       }
-      posEtiquetasLista.clear();
-      System.out.println("Deseja adicionar etiquetas ? (1 para sim, 0 para não)");
-      newEtiqueta = scanf.nextInt();
-      while (newEtiqueta == 1) {
-        System.out.println("Digite o índice da etiqueta que deseja adicionar dessa tarefa");
+      posRotulosLista.clear();
+      System.out.println("Deseja adicionar rotulos ? (1 para sim, 0 para não)");
+      newRotulo = scanf.nextInt();
+      while (newRotulo == 1) {
+        System.out.println("Digite o índice da rotulo que deseja adicionar dessa tarefa");
         System.out.println();
-        etiquetas = arquivoEtiqueta.listar();
+        rotulos = arquivoRotulo.listar();
         System.out.println();
-        posEtiquetasLista.add(scanf.nextInt() - 1);
-        System.out.println("Deseja adicionar mais etiquetas? (1 para sim, 0 para não)");
-        newEtiqueta = scanf.nextInt();
+        posRotulosLista.add(scanf.nextInt() - 1);
+        System.out.println("Deseja adicionar mais rotulos? (1 para sim, 0 para não)");
+        newRotulo = scanf.nextInt();
       }
       ArrayList<Integer> added = new ArrayList<>();
-      for (int i = 0; i < posEtiquetasLista.size(); i++) {
-        added.add(etiquetas.get(posEtiquetasLista.get(i)).getId());
+      for (int i = 0; i < posRotulosLista.size(); i++) {
+        added.add(rotulos.get(posRotulosLista.get(i)).getId());
       }
 
-      if (arquivoTarefas.updateEtiquetas(old, removed, added)) {
-        System.out.println("Etiquetas atualizadas com sucesso");
+      if (arquivoTarefas.updateRotulos(old, removed, added)) {
+        System.out.println("Rotulos atualizadas com sucesso");
       } else {
-        System.out.println("Erro ao atualizar as etiquetas");
+        System.out.println("Erro ao atualizar as rotulos");
       }
     }
   }
@@ -560,13 +560,13 @@ public class Main {
     }
   }
 
-  public static class CrudEtiquetas {
-    public static ArquivoEtiqueta arqEtiqueta;
+  public static class CrudRotulos {
+    public static ArquivoRotulo arqRotulo;
 
     Scanner scanf = new Scanner(System.in);
 
-    public void iniciarEtiqueta() throws Exception {
-      arqEtiqueta = new ArquivoEtiqueta();
+    public void iniciarRotulo() throws Exception {
+      arqRotulo = new ArquivoRotulo();
       int resposta = 0;
       System.out.println("---ETIQUETAS---");
 
@@ -580,16 +580,16 @@ public class Main {
 
       switch (resposta) {
         case 1:
-          criarEtiqueta();
+          criarRotulo();
           break;
         case 2:
-          listarEtiqueta();
+          listarRotulo();
           break;
         case 3:
-          atualizarEtiqueta();
+          atualizarRotulo();
           break;
         case 4:
-          deletarEtiqueta();
+          deletarRotulo();
           break;
         case 5:
           break;
@@ -599,31 +599,31 @@ public class Main {
       }
     }
 
-    public void criarEtiqueta() throws Exception {
+    public void criarRotulo() throws Exception {
       try {
         /* Limpar o buffer */
         scanf.nextLine();
-        System.out.println("Digite o nome da Etiqueta a ser Criada");
-        arqEtiqueta.create(scanf.nextLine());
+        System.out.println("Digite o nome da Rotulo a ser Criada");
+        arqRotulo.create(scanf.nextLine());
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
       System.out.println("Criado com sucesso");
       System.out.println();
-      arqEtiqueta.listar();
+      arqRotulo.listar();
     }
 
-    public void listarEtiqueta() throws Exception {
-      String nomeEtiqueta;
+    public void listarRotulo() throws Exception {
+      String nomeRotulo;
       try {
         scanf.nextLine();
-        System.out.println("Digite o nome da etiqueta que deseja listar as tarefas");
+        System.out.println("Digite o nome da rotulo que deseja listar as tarefas");
         System.out.println();
-        arqEtiqueta.listar();
+        arqRotulo.listar();
 
-        nomeEtiqueta = scanf.nextLine();
+        nomeRotulo = scanf.nextLine();
 
-        ArrayList<Tarefa> t = arqEtiqueta.read(nomeEtiqueta);
+        ArrayList<Tarefa> t = arqRotulo.read(nomeRotulo);
 
         for (int i = 0; i < t.size(); i++) {
           System.out.println("\n" + "Nome da Tarefa: " + t.get(i).getNome() + "\n" + "Data de Inicio: "
@@ -636,40 +636,40 @@ public class Main {
       }
     }
 
-    public void atualizarEtiqueta() throws Exception {
-      String nomeEtiqueta, novaEtiqueta;
+    public void atualizarRotulo() throws Exception {
+      String nomeRotulo, novaRotulo;
       try {
         scanf.nextLine();
-        System.out.println("Digite o nome da etiqueta que deseja atualizar");
+        System.out.println("Digite o nome da rotulo que deseja atualizar");
         System.out.println();
-        arqEtiqueta.listar();
-        nomeEtiqueta = scanf.nextLine();
+        arqRotulo.listar();
+        nomeRotulo = scanf.nextLine();
 
-        System.out.println("Digite o nome da nova etiqueta");
-        novaEtiqueta = scanf.nextLine();
+        System.out.println("Digite o nome da nova rotulo");
+        novaRotulo = scanf.nextLine();
 
-        arqEtiqueta.update(nomeEtiqueta, novaEtiqueta);
+        arqRotulo.update(nomeRotulo, novaRotulo);
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
       System.out.println("Atualizado com sucesso");
     }
 
-    public void deletarEtiqueta() throws Exception {
-      String nomeEtiqueta;
+    public void deletarRotulo() throws Exception {
+      String nomeRotulo;
       try {
         scanf.nextLine();
         System.out.println(
-            "Digite o índice da etiqueta que deseja deletar\n Obs: digite 0 para cancelar (favor ignorar a mensagem de erro)");
+            "Digite o índice da rotulo que deseja deletar\n Obs: digite 0 para cancelar (favor ignorar a mensagem de erro)");
         System.out.println();
-        ArrayList<Etiqueta> etiquetas = arqEtiqueta.listar();
+        ArrayList<Rotulo> rotulos = arqRotulo.listar();
         int index = scanf.nextInt();
-        while (index < 0 || index > etiquetas.size()) {
+        while (index < 0 || index > rotulos.size()) {
           System.out.println("Digite um índice válido");
           index = scanf.nextInt();
         }
-        nomeEtiqueta = etiquetas.get(index - 1).getNome();
-        if (arqEtiqueta.delete(nomeEtiqueta)) {
+        nomeRotulo = rotulos.get(index - 1).getNome();
+        if (arqRotulo.delete(nomeRotulo)) {
           System.out.println("Deletado com sucesso");
         }
       } catch (Exception e) {
