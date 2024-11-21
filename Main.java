@@ -12,7 +12,7 @@ public class Main {
     CrudTarefas crudTarefas = new CrudTarefas();
     CrudCategorias crudCategorias = new CrudCategorias();
     CrudEtiquetas crudEtiquetas = new CrudEtiquetas();
-    /* Criando o Scanner e Resposta para ler a entrada do usuário */
+    /* Criando o Scanner e Resposta para ler a aentrada do usuário */
     Scanner scanf = new Scanner(System.in);
     int resposta = 0;
     while (true) {
@@ -58,6 +58,9 @@ public class Main {
     public static ArquivoTarefas arquivoTarefas;
     public static ArquivoCategorias arquivoCategorias;
     public static ArquivoEtiqueta arquivoEtiqueta;
+    public static final String AMARELO = "\033[33m"; // Amarelo
+    public static final String VERDE = "\033[32m"; // Verde
+    public static final String RESET = "\033[0m"; // Resetar cor
     Scanner scanf = new Scanner(System.in);
 
     // Método para iniciar as operações de tarefas
@@ -145,7 +148,7 @@ public class Main {
         termo = termo.toLowerCase();
         tarefas = arquivoTarefas.listar(termo);
         for (int i = 0; i < tarefas.size(); i++) {
-          System.out.println("Tarefa " + (i + 1) + ":\n" + "Nome da Tarefa: " + tarefas.get(i).getNome() + "\n"
+          System.out.println((i + 1) + "º Tarefa " + "\n" + "Nome da Tarefa: " + tarefas.get(i).getNome() + "\n"
               + "Data de Inicio: "
               + tarefas.get(i).getInicio() + "\n" + "Data de Fim: " + tarefas.get(i).getFim() + "\n" +
               "Status: " + tarefas.get(i).getStatus() + "\n" + "Prioridade: " + tarefas.get(i).getPrioridade() + "\n");
@@ -164,7 +167,7 @@ public class Main {
         titulo = titulo.toLowerCase();
         ArrayList<Tarefa> tarefas = arquivoTarefas.listar(titulo);
         for (int i = 0; i < tarefas.size(); i++) {
-          System.out.println("Tarefa " + (i + 1) + ":\n" + "Nome da Tarefa: " + tarefas.get(i).getNome() + "\n"
+          System.out.println((i + 1) + "º Tarefa " + "\n" + "Nome da Tarefa: " + tarefas.get(i).getNome() + "\n"
               + "Data de Inicio: "
               + tarefas.get(i).getInicio() + "\n" + "Data de Fim: " + tarefas.get(i).getFim() + "\n" +
               "Status: " + tarefas.get(i).getStatus() + "\n" + "Prioridade: " + tarefas.get(i).getPrioridade() + "\n");
@@ -442,7 +445,9 @@ public class Main {
 
   public static class CrudCategorias {
     public static ArquivoCategorias categoria;
-
+    public static final String AMARELO = "\033[33m"; // Amarelo
+    public static final String VERDE = "\033[32m"; // Verde
+    public static final String RESET = "\033[0m"; // Resetar cor
     Scanner scanf = new Scanner(System.in);
 
     public void iniciarCategoria() throws Exception {
@@ -562,7 +567,9 @@ public class Main {
 
   public static class CrudEtiquetas {
     public static ArquivoEtiqueta arqEtiqueta;
-
+    public static final String AMARELO = "\033[33m"; // Amarelo
+    public static final String VERDE = "\033[32m"; // Verde
+    public static final String RESET = "\033[0m"; // Resetar cor
     Scanner scanf = new Scanner(System.in);
 
     public void iniciarEtiqueta() throws Exception {

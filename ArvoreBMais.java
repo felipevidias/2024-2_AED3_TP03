@@ -12,10 +12,14 @@
  * Implementado pelo Prof. Marcos Kutova
  * v2.0 - 2021
  */
-
 import java.io.*;
 import java.util.ArrayList;
 import java.lang.reflect.Constructor;
+
+// Esta versão da árvore funciona apenas como um conjunto de par de chaves.
+// A primeira chave pode repetir na árvore, mas não o par de chaves,
+// isto é, quando a primeira chave de dois elementos for igual, a segunda chave,
+// deve ser necessariamente diferente.
 
 public class ArvoreBMais<T extends RegistroArvoreBMais<T>> {
 

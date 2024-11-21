@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
 public class ParIDEndereco implements RegistroHashExtensivel<ParIDEndereco> {
 
     private int id; // key

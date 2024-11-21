@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -69,8 +68,6 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         return t;
     }
 
-
-
     public boolean update(Tarefa tarefa, Tarefa update) {
         boolean result = false;
         update.setId(tarefa.getId());
@@ -89,7 +86,6 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         }
         return result;
     }
-
 
     public boolean delete(Tarefa tarefa) {
         boolean result = false;
@@ -113,13 +109,11 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         return result;
     }
 
-
-
     public ArrayList<Tarefa> listar(String titulo) throws Exception {
         ArrayList<ElementoLista> elementos = new ArrayList<>();
         String[] chaves = stopWords.stopWordsCheck(titulo);
         for (int i = 0; i < chaves.length; i++) {
-
+            // System.out.println("Chave: " + chaves[i]);
             if (chaves[i] != "" && chaves[i] != " ") {
                 try {
                     ElementoLista[] elementoEncontrados;
@@ -132,11 +126,12 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                             float idf = stopWords.lista.numeroEntidades();
 
                             idf /= elementoEncontrados.length;
-
+                            // System.out.println("IDF: " + idf);
 
                             ElementoLista elementoAux = new ElementoLista(elementoEncontrados[j].getId(),
                                     frequencia * idf);
-
+                            // System.out.println("Elemento encontrado: ID = " + elementoAux.getId() + ",
+                            // Frequência TF-IDF = " + elementoAux.getFrequencia());
                             boolean existe = false;
                             for (int z = 0; z < elementos.size(); z++) {
                                 if (elementos.get(z).getId() == elementoAux.getId()) {
@@ -165,7 +160,6 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
             }
         });
 
-
         // Converter os elementos ordenados em tarefas
         ArrayList<Tarefa> tarefas = new ArrayList<>();
         for (ElementoLista elemento : elementos) {
@@ -177,16 +171,17 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
 
     public boolean updateEtiquetas(Tarefa tarefa, ArrayList<Integer> removed, ArrayList<Integer> added) {
         boolean result = false;
+
         try {
             ArrayList<Integer> idEtiquetas = tarefa.getIDEtiquetas();
-
+            // System.out.println("Qtd Etiquetas cadastradas: " + idEtiquetas.size());
 
             if (idEtiquetas.size() > 0) {
                 for (int i = 0; i < removed.size(); i++) {
                     boolean existe = false;
                     for (int j = 0; j < idEtiquetas.size(); j++) {
                         if (removed.get(i) == idEtiquetas.get(j)) {
-
+                            // System.out.println("Etiqueta removida: " + removed.get(i));
                             existe = true;
                         } else if (j == idEtiquetas.size() - 1 && !existe) {
                             System.out.println("Etiqueta não encontrada");
@@ -213,6 +208,7 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                     }
                 }
                 if (!existe) {
+                    // System.out.println("Etiqueta adicionada: " + added.get(i));
                     idEtiquetas.add(added.get(i));
                     arvoreB2.create(new ParIDEtiquetacID(added.get(i), tarefa.getId()));
                 }

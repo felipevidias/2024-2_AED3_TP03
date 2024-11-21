@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 
 public class ArquivoCategorias extends Arquivo<Categoria> {
@@ -74,7 +73,7 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
             cat.setId(categorias.get(0).getId());
 
             if (super.update(cat)) {
-                System.out.println("Atualizado");
+                System.out.println("Atualizo");
             }
 
             arvoreB.delete(categorias.get(0));

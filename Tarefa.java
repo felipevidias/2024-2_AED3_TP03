@@ -8,6 +8,11 @@ import java.lang.reflect.Array;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+/* Used to store recorded Tasks from the Arquivo database
+ * Contains:
+ *   id: Attribute given only by Arquivo to indicate its position
+ *   nome:
+ */
 public class Tarefa implements Registro {
     private int id;
 
@@ -107,6 +112,7 @@ public class Tarefa implements Registro {
                 dos.writeInt(this.idEtiquetas.get(i));
             }
         } catch (Exception e) {
+            System.out.println("Deu bobs ao converter Tarefa para array de byte");
             System.out.println(e.getMessage());
         }
         return baos.toByteArray();
@@ -130,6 +136,7 @@ public class Tarefa implements Registro {
             }
 
         } catch (Exception e) {
+            System.out.println("Deu bobs ao converter vetor de byte pra objeto tarefa");
             e.printStackTrace();
         }
     }

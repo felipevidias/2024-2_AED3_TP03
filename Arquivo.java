@@ -1,4 +1,3 @@
-
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ public class Arquivo<T extends Registro> {
     private File diretorio;
     String fileName;
     final int fimCabecalho = 4;
-    // A partir seguindo basicamente o que o professor fez
     HashExtensivel<ParIDEndereco> indiceDireto;
 
     // Método Create
@@ -72,6 +70,7 @@ public class Arquivo<T extends Registro> {
                 }
             }
         } catch (Exception e) {
+            System.out.println("Deu bobs na leitura de uma tarefa");
             e.printStackTrace();
         }
         return null;

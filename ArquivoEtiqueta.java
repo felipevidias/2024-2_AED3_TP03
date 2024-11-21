@@ -1,7 +1,7 @@
-import java.io.File;
 import java.util.ArrayList;
 
 public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
+
     ArvoreBMais<ParEtiquetaId> arvoreB;
 
     /* Criando o Arquivo de Etiqueta */
@@ -86,6 +86,8 @@ public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
 
         return true;
     }
+
+
 
     /*
      * Método de Deletar Etiqueta. Procura pelo nome da Etiqueta e a deleta. Retorna

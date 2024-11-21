@@ -2,14 +2,19 @@
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.Constructor;
-
 import java.io.DataInputStream;
 
 public class Categoria implements Registro {
 
+    @SuppressWarnings("rawtypes")
     Arquivo categorias;
 
+    /*
+     * Used to store recorded Tasks from the Arquivo database
+     * Contains:
+     * id: Attribute given only by Arquivo to indicate its position
+     * nome:
+     */
     private int id;
 
     // Atributos da classe Categoria
@@ -44,6 +49,7 @@ public class Categoria implements Registro {
             dos.writeInt(this.id);
             dos.writeUTF(this.nome);
         } catch (Exception e) {
+            System.out.println("Erro ao converter Tarefa para array de byte");
             System.out.println(e.getMessage());
         }
         return baos.toByteArray();
@@ -57,6 +63,7 @@ public class Categoria implements Registro {
             this.id = dis.readInt();
             this.nome = dis.readUTF();
         } catch (Exception e) {
+            System.out.println("Erro ao converter vetor de byte pra objeto tarefa");
             e.printStackTrace();
         }
     }
@@ -75,16 +82,6 @@ public class Categoria implements Registro {
     @Override
     public String toString() {
         return getArgumentList();
-    }
-
-    // Método toString
-    private String getArgumentAsLines() {
-        String s = "";
-        s += Integer.toString(this.id);
-        s += "\n";
-        s += this.nome;
-        s += "\n";
-        return s;
     }
 
     private String getArgumentList() {

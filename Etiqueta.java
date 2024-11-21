@@ -2,11 +2,11 @@
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.Constructor;
 import java.io.DataInputStream;
 
 public class Etiqueta implements Registro {
 
+    @SuppressWarnings("rawtypes")
     Arquivo estiquetas;
 
     private int id;
@@ -14,7 +14,7 @@ public class Etiqueta implements Registro {
     // Atributos da classe Categoria
     private String nome;
 
-    // Métodos Set
+    // Métodos Set's
     public void setId(int id) {
         this.id = id;
     }
@@ -22,9 +22,9 @@ public class Etiqueta implements Registro {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    // Fim Métodos Set
+    // Fim Métodos Set's
 
-    // Métodos Get
+    // Métodos Get's
     public int getId() {
         return this.id;
     }
@@ -33,7 +33,7 @@ public class Etiqueta implements Registro {
         return this.nome;
     }
 
-    // Fim Métodos Get
+    // Fim Métodos Get's
 
     // Método toByteArray
     public byte[] toByteArray() {
@@ -43,6 +43,7 @@ public class Etiqueta implements Registro {
             dos.writeInt(this.id);
             dos.writeUTF(this.nome);
         } catch (Exception e) {
+            System.out.println("Deu bobs ao converter Tarefa para array de byte");
             System.out.println(e.getMessage());
         }
         return baos.toByteArray();
@@ -56,6 +57,7 @@ public class Etiqueta implements Registro {
             this.id = dis.readInt();
             this.nome = dis.readUTF();
         } catch (Exception e) {
+            System.out.println("Erro ao converter vetor de byte pra objeto tarefa");
             e.printStackTrace();
         }
     }
@@ -74,16 +76,6 @@ public class Etiqueta implements Registro {
     @Override
     public String toString() {
         return getArgumentList();
-    }
-
-    // Método toString
-    private String getArgumentAsLines() {
-        String s = "";
-        s += Integer.toString(this.id);
-        s += "\n";
-        s += this.nome;
-        s += "\n";
-        return s;
     }
 
     private String getArgumentList() {
