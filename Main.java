@@ -124,7 +124,7 @@ public class Main {
           }
         }
         if (arquivoTarefas.delete(tarefas.get(numeroTarefa - 1))) {
-          System.out.println("Tarefa deletada com sucesso");
+          System.out.println("Tarefa deletada com sucesso:");
         } else {
           System.out.println("Erro ao deletar a tarefa");
         }
@@ -478,16 +478,21 @@ public class Main {
 
     public void criarCategoria() throws Exception {
       try {
-        /* Limpar o buffer */
-        scanf.nextLine();
-        System.out.println("Digite o nome da Categoria a ser Criada");
-        categoria.create(scanf.nextLine());
+        System.out.println("Digite o nome da Categoria a ser criada:");
+        scanf.nextLine(); // Limpa o buffer
+        String nomeCategoria = scanf.nextLine();
+
+        if (nomeCategoria.isEmpty()) {
+          System.out.println("O nome da categoria não pode ser vazio.");
+          return;
+        }
+
+        // Cria a nova categoria
+        categoria.create(nomeCategoria);
+        System.out.println("Categoria criada com sucesso!");
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println("Erro ao criar a categoria: " + e.getMessage());
       }
-      System.out.println("Criado com sucesso");
-      System.out.println();
-      categoria.listar();
     }
 
     public void listarCategoria() throws Exception {
@@ -533,28 +538,37 @@ public class Main {
     }
 
     public void deletarCategoria() throws Exception {
-      String nomeCategoria;
       try {
-        scanf.nextLine();
-        System.out.println("Digite o número da Categoria que deseja deletar");
-        System.out.println();
-        ArrayList<Categoria> categorias = categoria.listar();
+        System.out.println("Digite o número da Categoria que deseja deletar:");
+        ArrayList<Categoria> categorias = categoria.listar(); // Lista todas as categorias
+
+        // Mostra as categorias disponíveis com seus índices
+        for (int i = 0; i < categorias.size(); i++) {
+          System.out.println(i + " - " + categorias.get(i).getNome());
+        }
+
+        // Lê o índice escolhido
         int index = scanf.nextInt();
-        while (index < 0 || index > categorias.size()) {
-          System.out.println("Digite um índice válido");
+        while (index < 0 || index >= categorias.size()) {
+          System.out.println("Digite um índice válido:");
           index = scanf.nextInt();
         }
-        categoria.listar();
 
-        nomeCategoria = scanf.nextLine();
+        // Captura o nome da categoria selecionada
+        scanf.nextLine(); // Limpa o buffer antes de ler o próximo input
+        String nomeCategoria = categorias.get(index).getNome();
 
+        // Tenta deletar a categoria
         if (categoria.delete(nomeCategoria)) {
-          System.out.println("Deletado com sucesso");
+          System.out.println("Deletado com sucesso: " + nomeCategoria);
+        } else {
+          System.out.println("Erro ao deletar a categoria.");
         }
       } catch (Exception e) {
         System.out.println(e.getMessage());
       }
     }
+
   }
 
   public static class CrudEtiquetas {
@@ -666,7 +680,7 @@ public class Main {
         }
         nomeEtiqueta = etiquetas.get(index - 1).getNome();
         if (arqEtiqueta.delete(nomeEtiqueta)) {
-          System.out.println("Deletado com sucesso");
+          System.out.println("Deletado com sucesso: " + nomeEtiqueta);
         }
       } catch (Exception e) {
         System.out.println(e.getMessage());

@@ -23,11 +23,22 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
     }
 
     /* Método Privado da criação de Categoria. Retorna o ID da Categoria */
-    private int create1(Categoria categoria) throws Exception {
+    public int create1(Categoria categoria) throws Exception {
         int id = super.create(categoria);
         categoria.setId(id);
         try {
-            arvoreB.create(new ParNomeId(categoria.getNome(), categoria.getId()));
+            ParNomeId parNomeId = new ParNomeId(categoria.getNome(), categoria.getId());
+            arvoreB.create(parNomeId);
+            System.out.println("Categoria inserida na árvore B+: " + categoria.getNome() + " com ID: " + id);
+
+            // Testando a leitura após inserir
+            ArrayList<ParNomeId> categoriasNaArvore = arvoreB.read(parNomeId);
+            if (categoriasNaArvore.isEmpty()) {
+                System.out.println("Erro: Categoria não encontrada após inserção!");
+            } else {
+                System.out.println("Categoria encontrada após inserção: " + categoriasNaArvore.get(0).getNome());
+            }
+
         } catch (Exception e) {
             System.out.println("Erro na criação de uma nova categoria");
             System.out.println(e.getMessage());
@@ -92,19 +103,35 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
      */
     public boolean delete(String nomeCategoria) throws Exception {
         try {
-            ArrayList<ParNomeId> cat = arvoreB.read(new ParNomeId(nomeCategoria));
+            // Cria o objeto ParNomeId com o nome da categoria
+            ParNomeId parNomeId = new ParNomeId(nomeCategoria);
+            System.out.println("Tentando deletar a categoria: " + nomeCategoria);
 
-            /* Se a Categoria estiver vazia, incapaz de fazer o método */
+            // Exibe o valor sendo lido na árvore
+            System.out.println("Lendo da árvore B+ com chave: " + parNomeId);
+
+            // Tenta ler a categoria na árvore B+
+            ArrayList<ParNomeId> cat = arvoreB.read(parNomeId);
+
             if (cat.isEmpty()) {
-                throw new Exception("Categoria Inesistente");
+                System.out.println("Categoria não encontrada na árvore B+: " + nomeCategoria);
+                throw new Exception("Categoria Inexistente");
             }
 
+            // Categoria encontrada, imprime detalhes
+            System.out.println(
+                    "Categoria encontrada na árvore B+: " + cat.get(0).getNome() + " com ID: " + cat.get(0).getId());
+
+            // Verifica se há tarefas associadas à categoria
             ArquivoTarefas tarefas = new ArquivoTarefas();
             ArrayList<Tarefa> t = tarefas.read(cat.get(0));
 
-            if (!t.isEmpty())
+            if (!t.isEmpty()) {
+                System.out.println("Não é possível excluir, pois existem tarefas associadas à categoria.");
                 throw new Exception("Tarefas existentes dentro desta categoria");
+            }
 
+            // Deleta a categoria na árvore B+ e no armazenamento
             return super.delete(cat.get(0).getId()) ? arvoreB.delete(cat.get(0)) : false;
         } catch (Exception e) {
             System.out.println("Erro em deletar");
@@ -123,7 +150,7 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
                 throw new Exception("Categorias ainda não foram criadas");
 
             for (int i = 0; i < categorias.size(); i++) {
-                System.out.println("Indice: " + categorias.get(i).getId() + " Nome da Categoria: "
+                System.out.println("Indice " + categorias.get(i).getId() + " - Nome da Categoria: "
                         + categorias.get(i).getNome());
             }
         } catch (Exception e) {
