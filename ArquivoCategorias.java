@@ -2,9 +2,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ArquivoCategorias extends Arquivo<Categoria> {
-    public static final String AMARELO = "\033[33m"; // Amarelo
-    public static final String VERDE = "\033[32m"; // Verde
-    public static final String RESET = "\033[0m"; // Resetar cor
     ArvoreBMais<ParNomeId> arvoreB;
 
     /* Criando o Arquivo de Categorias */
@@ -91,55 +88,6 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
     }
 
     /*
-     * Método de atualização chamando o Método Update de Tarefa. Retorna um
-     * booleano.
-     */
-    /*
-     * public boolean updateTarefa(String nomeCategoria, String nomeTarefa, Tarefa
-     * updateTarefa)throws Exception{
-     * ArrayList<ParNomeId> categorias = arvoreB.read(new ParNomeId(nomeCategoria));
-     * ArquivoTarefas tarefas = new ArquivoTarefas();
-     * 
-     * try{
-     * //Se a Categoria estiver vazia, incapaz de fazer o método
-     * if(categorias.isEmpty()){
-     * throw new Exception("Categoria Inexistente");
-     * }
-     * 
-     * }
-     * catch(Exception e){
-     * System.out.println("Erro no updateTarefa");
-     * System.out.println(e.getMessage());
-     * }
-     * 
-     * return tarefas.update(categorias.get(0), nomeTarefa, updateTarefa);
-     * }
-     */
-
-    /* Método de Delete. Procura pelo nome. Retorna Booleano */
-    /*
-     * public boolean deleteTarefa(String nomeCategoria, String nomeTarefa)throws
-     * Exception{
-     * ArrayList<ParNomeId> categorias = arvoreB.read(new ParNomeId(nomeCategoria));
-     * ArquivoTarefas tarefas = new ArquivoTarefas();
-     * 
-     * try{
-     * 
-     * Se a Categoria estiver vazia, incapaz de fazer o método
-     * if(categorias.isEmpty()){
-     * throw new Exception("Categoria Inexistente");
-     * }
-     * }
-     * catch(Exception e){
-     * System.out.println("Erro no Delete");
-     * System.out.println(e.getMessage());
-     * }
-     * 
-     * return tarefas.delete(categorias.get(0), nomeTarefa);
-     * }
-     */
-
-    /*
      * Método de Deletar Categoria. Procura pelo nome da Categoria e a deleta.
      * Retorna booleano
      */
@@ -176,8 +124,8 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
                 throw new Exception("Categorias ainda não foram criadas");
 
             for (int i = 0; i < categorias.size(); i++) {
-                System.out.println(VERDE + "Indice: " + categorias.get(i).getId() + " Nome da Categoria: "
-                        + categorias.get(i).getNome() + RESET);
+                System.out.println("Indice: " + categorias.get(i).getId() + " Nome da Categoria: "
+                        + categorias.get(i).getNome());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
