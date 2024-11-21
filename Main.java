@@ -5,9 +5,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
-
-  // Arquivo declarado fora de main() para ser poder ser usado por outros métodos
-
   public static void main(String[] args) throws Exception {
     CrudTarefas crudTarefas = new CrudTarefas();
     CrudCategorias crudCategorias = new CrudCategorias();
@@ -58,9 +55,6 @@ public class Main {
     public static ArquivoTarefas arquivoTarefas;
     public static ArquivoCategorias arquivoCategorias;
     public static ArquivoEtiqueta arquivoEtiqueta;
-    public static final String AMARELO = "\033[33m"; // Amarelo
-    public static final String VERDE = "\033[32m"; // Verde
-    public static final String RESET = "\033[0m"; // Resetar cor
     Scanner scanf = new Scanner(System.in);
 
     // Método para iniciar as operações de tarefas
@@ -445,9 +439,7 @@ public class Main {
 
   public static class CrudCategorias {
     public static ArquivoCategorias categoria;
-    public static final String AMARELO = "\033[33m"; // Amarelo
-    public static final String VERDE = "\033[32m"; // Verde
-    public static final String RESET = "\033[0m"; // Resetar cor
+
     Scanner scanf = new Scanner(System.in);
 
     public void iniciarCategoria() throws Exception {
@@ -567,9 +559,6 @@ public class Main {
 
   public static class CrudEtiquetas {
     public static ArquivoEtiqueta arqEtiqueta;
-    public static final String AMARELO = "\033[33m"; // Amarelo
-    public static final String VERDE = "\033[32m"; // Verde
-    public static final String RESET = "\033[0m"; // Resetar cor
     Scanner scanf = new Scanner(System.in);
 
     public void iniciarEtiqueta() throws Exception {

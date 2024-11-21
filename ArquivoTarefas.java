@@ -113,7 +113,7 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
         ArrayList<ElementoLista> elementos = new ArrayList<>();
         String[] chaves = stopWords.stopWordsCheck(titulo);
         for (int i = 0; i < chaves.length; i++) {
-            // System.out.println("Chave: " + chaves[i]);
+
             if (chaves[i] != "" && chaves[i] != " ") {
                 try {
                     ElementoLista[] elementoEncontrados;
@@ -126,12 +126,10 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                             float idf = stopWords.lista.numeroEntidades();
 
                             idf /= elementoEncontrados.length;
-                            // System.out.println("IDF: " + idf);
 
                             ElementoLista elementoAux = new ElementoLista(elementoEncontrados[j].getId(),
                                     frequencia * idf);
-                            // System.out.println("Elemento encontrado: ID = " + elementoAux.getId() + ",
-                            // Frequência TF-IDF = " + elementoAux.getFrequencia());
+
                             boolean existe = false;
                             for (int z = 0; z < elementos.size(); z++) {
                                 if (elementos.get(z).getId() == elementoAux.getId()) {
@@ -174,14 +172,13 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
 
         try {
             ArrayList<Integer> idEtiquetas = tarefa.getIDEtiquetas();
-            // System.out.println("Qtd Etiquetas cadastradas: " + idEtiquetas.size());
 
             if (idEtiquetas.size() > 0) {
                 for (int i = 0; i < removed.size(); i++) {
                     boolean existe = false;
                     for (int j = 0; j < idEtiquetas.size(); j++) {
                         if (removed.get(i) == idEtiquetas.get(j)) {
-                            // System.out.println("Etiqueta removida: " + removed.get(i));
+
                             existe = true;
                         } else if (j == idEtiquetas.size() - 1 && !existe) {
                             System.out.println("Etiqueta não encontrada");
@@ -199,8 +196,7 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                 boolean existe = false;
                 if (idEtiquetas.size() > 0) {
                     for (int j = 0; j < idEtiquetas.size(); j++) {
-                        // System.out.println("added.get(" + i + "): " + added.get(i) + " - Etiqueta
-                        // Cadastrada: " + idEtiquetas.get(j));
+
                         if (added.get(i) == idEtiquetas.get(j)) {
                             System.out.println("Etiqueta já existente");
                             existe = true;
@@ -208,7 +204,7 @@ public class ArquivoTarefas extends Arquivo<Tarefa> {
                     }
                 }
                 if (!existe) {
-                    // System.out.println("Etiqueta adicionada: " + added.get(i));
+
                     idEtiquetas.add(added.get(i));
                     arvoreB2.create(new ParIDEtiquetacID(added.get(i), tarefa.getId()));
                 }

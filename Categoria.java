@@ -9,12 +9,6 @@ public class Categoria implements Registro {
     @SuppressWarnings("rawtypes")
     Arquivo categorias;
 
-    /*
-     * Used to store recorded Tasks from the Arquivo database
-     * Contains:
-     * id: Attribute given only by Arquivo to indicate its position
-     * nome:
-     */
     private int id;
 
     // Atributos da classe Categoria

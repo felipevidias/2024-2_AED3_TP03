@@ -4,15 +4,9 @@ import java.util.ArrayList;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.lang.reflect.Array;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-/* Used to store recorded Tasks from the Arquivo database
- * Contains:
- *   id: Attribute given only by Arquivo to indicate its position
- *   nome:
- */
 public class Tarefa implements Registro {
     private int id;
 
@@ -167,24 +161,6 @@ public class Tarefa implements Registro {
     @Override
     public String toString() {
         return getArgumentList();
-    }
-
-    // Método toString
-    private String getArgumentAsLines() {
-        String s = "";
-        s += Integer.toString(this.id);
-        s += "\n";
-        s += this.nome;
-        s += "\n";
-        s += this.inicio;
-        s += "\n";
-        s += this.fim;
-        s += "\n";
-        s += Byte.toString(this.status);
-        s += "\n";
-        s += Byte.toString(this.prioridade);
-        s += "\n";
-        return s;
     }
 
     private String getArgumentList() {

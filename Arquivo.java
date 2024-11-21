@@ -70,7 +70,7 @@ public class Arquivo<T extends Registro> {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Deu bobs na leitura de uma tarefa");
+            System.out.println("Erro na leitura de uma tarefa");
             e.printStackTrace();
         }
         return null;
