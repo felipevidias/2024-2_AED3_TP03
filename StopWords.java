@@ -49,13 +49,11 @@ public class StopWords {
   public StopWords() {
     File arquivo;
     try {
-      arquivo = new File("StopWords.txt");
+      arquivo = new File("stopWordsList.txt");
       Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext()) {
         String linha = scanner.nextLine();
         linha = linha.toLowerCase();
-        // Como cada linha do arquivo possui um " " no final ao invés de um um "\n" ou
-        // "\0", é necessário retirar o último caractere de cada linha
         linha = linha.substring(0, linha.length() - 1);
         stopWords.add(linha);
       }
