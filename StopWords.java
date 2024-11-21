@@ -48,13 +48,11 @@ public class StopWords {
   public StopWords() {
     File arquivo;
     try {
-      arquivo = new File("StopWords.txt");
+      arquivo = new File("topWords.txt");
       Scanner scanner = new Scanner(arquivo);
       while (scanner.hasNext()) {
         String linha = scanner.nextLine();
         linha = linha.toLowerCase();
-        // Como cada linha do arquivo possui um " " no final ao invés de um um "\n" ou
-        // "\0", é necessário retirar o último caractere de cada linha
         linha = linha.substring(0, linha.length() - 1);
         stopWords.add(linha);
       }
@@ -143,16 +141,14 @@ public class StopWords {
 
       int opcao;
       do {
-        System.out.println("\n\n-------------------------------");
-        System.out.println("              MENU");
-        System.out.println("-------------------------------");
-        System.out.println("1 - Inserir");
-        System.out.println("2 - Buscar");
-        System.out.println("3 - Excluir");
-        System.out.println("4 - Imprimir");
+        System.out.println("---MENU---");
+        System.out.println("1 - Inserir..............");
+        System.out.println("2 - Buscar...............");
+        System.out.println("3 - Excluir..............");
+        System.out.println("4 - Imprimir.............");
         System.out.println("5 - Incrementar entidades");
         System.out.println("6 - Decrementar entidades");
-        System.out.println("0 - Sair");
+        System.out.println("0 - Sair.................");
         try {
           opcao = Integer.valueOf(console.nextLine());
         } catch (NumberFormatException e) {

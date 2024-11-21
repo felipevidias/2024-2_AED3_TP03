@@ -8,7 +8,6 @@ import java.lang.reflect.Array;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-
 public class Tarefa implements Registro {
     private int id;
 

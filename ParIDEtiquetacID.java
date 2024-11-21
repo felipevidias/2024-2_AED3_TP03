@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ParIDEtiquetacID implements RegistroArvoreBMais<ParIDEtiquetacID> {
 
-    /* Conexão entre ID de Categorias e ID de Tarefa */
+    // Conexão entre ID de Categorias e ID de Tarefa
     private int id1;
     private int id2;
     private final short TAMANHO = 8;
@@ -29,7 +29,7 @@ public class ParIDEtiquetacID implements RegistroArvoreBMais<ParIDEtiquetacID> {
         }
     }
 
-    /* SET's */
+    // SETs
     public void setId1(int id1) {
 
         this.id1 = id1;
@@ -40,9 +40,9 @@ public class ParIDEtiquetacID implements RegistroArvoreBMais<ParIDEtiquetacID> {
         this.id2 = id2;
     }
 
-    /* Fim dos Set's */
+    // Fim dos Set
 
-    /* GET's */
+    // GETs
     public int getId1() {
 
         return id1;
@@ -53,7 +53,7 @@ public class ParIDEtiquetacID implements RegistroArvoreBMais<ParIDEtiquetacID> {
         return id2;
     }
 
-    /* Fim dos GET's */
+    // Fim dos GETs
 
     @Override
 

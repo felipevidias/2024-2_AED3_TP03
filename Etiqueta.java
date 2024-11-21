@@ -9,18 +9,12 @@ public class Etiqueta implements Registro {
 
     Arquivo estiquetas;
 
-    /*
-     * Used to store recorded Tasks from the Arquivo database
-     * Contains:
-     * id: Attribute given only by Arquivo to indicate its position
-     * nome:
-     */
     private int id;
 
     // Atributos da classe Categoria
     private String nome;
 
-    // Métodos Set's
+    // Métodos Set
     public void setId(int id) {
         this.id = id;
     }
@@ -28,9 +22,9 @@ public class Etiqueta implements Registro {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    // Fim Métodos Set's
+    // Fim Métodos Set
 
-    // Métodos Get's
+    // Métodos Get
     public int getId() {
         return this.id;
     }
@@ -39,7 +33,7 @@ public class Etiqueta implements Registro {
         return this.nome;
     }
 
-    // Fim Métodos Get's
+    // Fim Métodos Get
 
     // Método toByteArray
     public byte[] toByteArray() {
@@ -49,7 +43,6 @@ public class Etiqueta implements Registro {
             dos.writeInt(this.id);
             dos.writeUTF(this.nome);
         } catch (Exception e) {
-            System.out.println("Deu bobs ao converter Tarefa para array de byte");
             System.out.println(e.getMessage());
         }
         return baos.toByteArray();
@@ -63,7 +56,6 @@ public class Etiqueta implements Registro {
             this.id = dis.readInt();
             this.nome = dis.readUTF();
         } catch (Exception e) {
-            System.out.println("Deu bobs ao converter vetor de byte pra objeto tarefa");
             e.printStackTrace();
         }
     }

@@ -74,7 +74,7 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
             cat.setId(categorias.get(0).getId());
 
             if (super.update(cat)) {
-                System.out.println("Atualizo");
+                System.out.println("Atualizado");
             }
 
             arvoreB.delete(categorias.get(0));

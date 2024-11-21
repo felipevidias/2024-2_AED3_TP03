@@ -568,7 +568,7 @@ public class Main {
     public void iniciarEtiqueta() throws Exception {
       arqEtiqueta = new ArquivoEtiqueta();
       int resposta = 0;
-      System.out.println("---ETIQUETAS--");
+      System.out.println("---ETIQUETAS---");
 
       System.out.println("1) Incluir..................");
       System.out.println("2) Buscar...................");

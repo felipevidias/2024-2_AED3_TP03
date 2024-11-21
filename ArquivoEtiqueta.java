@@ -88,57 +88,6 @@ public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
     }
 
     /*
-     * Método de atualização chamando o Método Update de Tarefa. Retorna um
-     * booleano.
-     */
-    /*
-     * public boolean updateTarefa(String nomeEtiqueta, String nomeTarefa, Tarefa
-     * updateTarefa)throws Exception{
-     * ArrayList<ParEtiquetaId> etiqueta = arvoreB.read(new
-     * ParEtiquetaId(nomeEtiqueta));
-     * ArquivoTarefas tarefas = new ArquivoTarefas();
-     *
-     * try{
-     * //Se a Etiqueta estiver vazia, incapaz de fazer o método
-     * if(etiqueta.isEmpty()){
-     * throw new Exception("Etiqueta Inexistente");
-     * }
-     *
-     * }
-     * catch(Exception e){
-     * System.out.println("Erro no updateTarefa");
-     * System.out.println(e.getMessage());
-     * }
-     *
-     * return tarefas.update(etiqueta.get(0), nomeTarefa, updateTarefa);
-     * }
-     */
-
-    /* Método de Delete. Procura pelo nome. Retorna Booleano */
-    /*
-     * public boolean deleteTarefa(String nomeEtiqueta, String nomeTarefa)throws
-     * Exception{
-     * ArrayList<ParEtiquetaId> etiqueta = arvoreB.read(new
-     * ParEtiquetaId(nomeEtiqueta));
-     * ArquivoTarefas tarefas = new ArquivoTarefas();
-     *
-     * try{
-     *
-     * Se a Etiqueta estiver vazia, incapaz de fazer o método
-     * if(etiqueta.isEmpty()){
-     * throw new Exception("Etiqueta Inexistente");
-     * }
-     * }
-     * catch(Exception e){
-     * System.out.println("Erro no Delete");
-     * System.out.println(e.getMessage());
-     * }
-     *
-     * return tarefas.delete(etiqueta.get(0), nomeTarefa);
-     * }
-     */
-
-    /*
      * Método de Deletar Etiqueta. Procura pelo nome da Etiqueta e a deleta. Retorna
      * booleano
      */
