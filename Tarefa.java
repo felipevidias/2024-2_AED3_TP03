@@ -107,7 +107,6 @@ public class Tarefa implements Registro {
                 dos.writeInt(this.idEtiquetas.get(i));
             }
         } catch (Exception e) {
-            System.out.println("Deu bobs ao converter Tarefa para array de byte");
             System.out.println(e.getMessage());
         }
         return baos.toByteArray();
