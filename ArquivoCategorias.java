@@ -58,7 +58,7 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
 
             /* Se a Categoria estiver vazia, incapaz de fazer o método */
             if (categorias.isEmpty()) {
-                throw new Exception("Categoria inxistente");
+                throw new Exception("Categoria inexistente");
             }
             t = tarefas.read(categorias.get(0));
         } catch (Exception e) {
@@ -69,32 +69,77 @@ public class ArquivoCategorias extends Arquivo<Categoria> {
     }
 
     /*
-     * Método de atualização do nome de uma Categoria. Retornando se foi feito com
-     * Sucesso ou Não.
+     * Método de atualização do nome de uma Categoria.
+     * Atualiza o nome da Categoria, mostrando o estado da árvore B+ antes e depois
+     * da operação.
      */
     public boolean update(String nomeCategoria, String novaCategoria) throws Exception {
-        Categoria cat = new Categoria(novaCategoria);
-
         try {
-            ArrayList<ParNomeId> categorias = arvoreB.read(new ParNomeId(nomeCategoria));
-            /* Se a Categoria estiver vazia, incapaz de fazer o método */
+            // Cria o objeto ParNomeId com o nome da categoria antiga
+            ParNomeId parNomeIdAntigo = new ParNomeId(nomeCategoria);
+            System.out.println("Tentando atualizar a categoria: " + nomeCategoria);
+
+            // Lê a categoria antiga na árvore B+
+            ArrayList<ParNomeId> categorias = arvoreB.read(parNomeIdAntigo);
+
             if (categorias.isEmpty()) {
+                System.out.println("Categoria não encontrada na árvore B+: " + nomeCategoria);
                 throw new Exception("Categoria Inexistente");
             }
-            cat.setId(categorias.get(0).getId());
 
-            if (super.update(cat)) {
-                System.out.println("Atualizo");
+            // Categoria encontrada, imprime detalhes
+            ParNomeId categoriaAntiga = categorias.get(0);
+            System.out.println("Categoria encontrada na árvore B+: " + categoriaAntiga.getNome()
+                    + " com ID: " + categoriaAntiga.getId());
+
+            // Atualiza o nome da categoria
+            Categoria categoriaNova = new Categoria(novaCategoria);
+            categoriaNova.setId(categoriaAntiga.getId());
+
+            System.out.println("Atualizando o nome para: " + novaCategoria);
+
+            // Atualiza no arquivo principal
+            if (super.update(categoriaNova)) {
+                System.out.println("Categoria atualizada no arquivo principal com sucesso.");
+            } else {
+                System.out.println("Erro ao atualizar categoria no arquivo principal.");
+                return false;
             }
 
-            arvoreB.delete(categorias.get(0));
-            arvoreB.create(new ParNomeId(cat.getNome(), cat.getId()));
+            // Remove o par antigo da árvore B+
+            if (arvoreB.delete(categoriaAntiga)) {
+                System.out.println("Par removido da árvore B+: " + categoriaAntiga.getNome());
+            } else {
+                System.out.println("Erro ao remover o par antigo da árvore B+.");
+                return false;
+            }
+
+            // Cria o par atualizado na árvore B+
+            ParNomeId parNomeIdNovo = new ParNomeId(categoriaNova.getNome(), categoriaNova.getId());
+            if (arvoreB.create(parNomeIdNovo)) {
+                System.out.println("Par atualizado inserido na árvore B+: " + parNomeIdNovo.getNome()
+                        + " com ID: " + parNomeIdNovo.getId());
+            } else {
+                System.out.println("Erro ao inserir o par atualizado na árvore B+.");
+                return false;
+            }
+
+            // Verifica o estado da árvore após a atualização
+            ArrayList<ParNomeId> categoriasNaArvore = arvoreB.read(parNomeIdNovo);
+            if (categoriasNaArvore.isEmpty()) {
+                System.out.println("Erro: Categoria atualizada não encontrada na árvore B+.");
+            } else {
+                System.out.println("Categoria atualizada encontrada na árvore B+: "
+                        + categoriasNaArvore.get(0).getNome());
+            }
+
+            return true;
+
         } catch (Exception e) {
             System.out.println("Erro no update do Arquivo");
             System.out.println(e.getMessage());
+            return false;
         }
-
-        return true;
     }
 
     /*

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
 
-    ArvoreBMais<ParEtiquetaId> arvoreB;
+    private ArvoreBMais<ParEtiquetaId> arvoreB;
 
     /* Criando o Arquivo de Etiqueta */
     public ArquivoEtiqueta() throws Exception {
@@ -10,6 +10,7 @@ public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
         try {
             arvoreB = new ArvoreBMais<>(ParEtiquetaId.class.getConstructor(), 5, "./dados/ArvoresEtiquetas");
         } catch (Exception e) {
+            System.out.println("Erro ao inicializar a árvore B+ para etiquetas:");
             System.out.println(e.getMessage());
             throw new Exception();
         }
@@ -17,122 +18,170 @@ public class ArquivoEtiqueta extends Arquivo<Etiqueta> {
 
     /* CRUD DE ETIQUETA */
 
-    /* Método Publico para a criação de Etiqueta. Retorna a Etiqueta criada */
+    /*
+     * Método para criar uma nova etiqueta.
+     * Retorna o ID da etiqueta criada.
+     */
     public int create(String nomeEtiqueta) throws Exception {
-        Etiqueta etiqueta = new Etiqueta(nomeEtiqueta);
-        return this.create1(etiqueta);
-    }
-
-    /* Método Privado da criação de Etiqueta. Retorna o ID da Etiqueta */
-    private int create1(Etiqueta etiqueta) throws Exception {
-        int id = super.create(etiqueta);
-        etiqueta.setId(id);
         try {
+            // Criando a nova etiqueta
+            Etiqueta etiqueta = new Etiqueta(nomeEtiqueta);
+            System.out.println("Criando nova etiqueta: " + nomeEtiqueta);
+
+            // Salvando no arquivo
+            int id = super.create(etiqueta);
+            etiqueta.setId(id);
+
+            // Adicionando na árvore B+
             arvoreB.create(new ParEtiquetaId(etiqueta.getNome(), etiqueta.getId()));
+
+            System.out.println("Etiqueta criada com sucesso! ID: " + id);
+            return id;
         } catch (Exception e) {
-            System.out.println("Erro na criação de uma nova etiqueta");
+            System.out.println("Erro ao criar a etiqueta:");
             System.out.println(e.getMessage());
+            throw new Exception("Erro ao criar etiqueta.");
         }
-        return id;
     }
 
     /*
-     * Método de leitura listando as Tarefas da Etiqueta passada como parametro.
-     * Retorna as Tarefas
+     * Método para ler as tarefas associadas a uma etiqueta.
+     * Retorna a lista de tarefas.
      */
     public ArrayList<Tarefa> read(String nomeEtiqueta) throws Exception {
-        ArrayList<Tarefa> t = new ArrayList<>();
-        ArquivoTarefas tarefas = new ArquivoTarefas();
+        ArrayList<Tarefa> tarefas = new ArrayList<>();
         try {
-            ArrayList<ParEtiquetaId> etiqueta = arvoreB.read(new ParEtiquetaId(nomeEtiqueta));
+            System.out.println("Buscando tarefas da etiqueta: " + nomeEtiqueta);
 
-            /* Se a Etiqueta estiver vazia, incapaz de fazer o método */
-            if (etiqueta.isEmpty()) {
-                throw new Exception("Etiqueta inxistente");
+            // Lendo na árvore B+
+            ArrayList<ParEtiquetaId> etiquetas = arvoreB.read(new ParEtiquetaId(nomeEtiqueta));
+
+            if (etiquetas.isEmpty()) {
+                System.out.println("Etiqueta não encontrada: " + nomeEtiqueta);
+                throw new Exception("Etiqueta inexistente");
             }
-            t = tarefas.read(etiqueta.get(0));
+
+            System.out.println("Etiqueta encontrada. ID: " + etiquetas.get(0).getId());
+
+            // Lendo as tarefas associadas
+            ArquivoTarefas arquivoTarefas = new ArquivoTarefas();
+            tarefas = arquivoTarefas.read(etiquetas.get(0));
+
+            if (tarefas.isEmpty()) {
+                System.out.println("Nenhuma tarefa associada à etiqueta.");
+            } else {
+                System.out.println("Tarefas encontradas: " + tarefas.size());
+            }
+
         } catch (Exception e) {
-            System.out.println("Erro na leitura do Arquivo");
+            System.out.println("Erro ao ler as tarefas da etiqueta:");
             System.out.println(e.getMessage());
         }
-        return t;
+        return tarefas;
     }
 
     /*
-     * Método de atualização do nome de uma Etiqueta. Retornando se foi feito com
-     * Sucesso ou Não.
+     * Método para atualizar o nome de uma etiqueta.
+     * Retorna true se atualizado com sucesso.
      */
     public boolean update(String nomeEtiqueta, String novaEtiqueta) throws Exception {
-        Etiqueta eti = new Etiqueta(novaEtiqueta);
-
         try {
-            ArrayList<ParEtiquetaId> etiqueta = arvoreB.read(new ParEtiquetaId(nomeEtiqueta));
-            /* Se a Etiqueta estiver vazia, incapaz de fazer o método */
-            if (etiqueta.isEmpty()) {
-                throw new Exception("Etiqueta Inexistente");
-            }
-            eti.setId(etiqueta.get(0).getId());
+            System.out.println("Atualizando etiqueta: " + nomeEtiqueta + " para " + novaEtiqueta);
 
-            if (super.update(eti)) {
-                System.out.println("Atualizo");
+            // Lendo na árvore B+
+            ArrayList<ParEtiquetaId> etiquetas = arvoreB.read(new ParEtiquetaId(nomeEtiqueta));
+
+            if (etiquetas.isEmpty()) {
+                System.out.println("Etiqueta não encontrada: " + nomeEtiqueta);
+                throw new Exception("Etiqueta inexistente");
             }
 
-            arvoreB.delete(etiqueta.get(0));
-            arvoreB.create(new ParEtiquetaId(eti.getNome(), eti.getId()));
+            Etiqueta etiqueta = new Etiqueta(novaEtiqueta);
+            etiqueta.setId(etiquetas.get(0).getId());
+
+            // Atualizando no arquivo
+            if (super.update(etiqueta)) {
+                System.out.println("Etiqueta atualizada no arquivo.");
+            }
+
+            // Atualizando na árvore B+
+            arvoreB.delete(etiquetas.get(0));
+            arvoreB.create(new ParEtiquetaId(etiqueta.getNome(), etiqueta.getId()));
+
+            System.out.println("Etiqueta atualizada com sucesso!");
+            return true;
+
         } catch (Exception e) {
-            System.out.println("Erro no update do Arquivo");
-            System.out.println(e.getMessage());
-        }
-
-        return true;
-    }
-
-
-
-    /*
-     * Método de Deletar Etiqueta. Procura pelo nome da Etiqueta e a deleta. Retorna
-     * booleano
-     */
-    public boolean delete(String nomeEtiqueta) throws Exception {
-        try {
-            ArrayList<ParEtiquetaId> eti = arvoreB.read(new ParEtiquetaId(nomeEtiqueta));
-
-            /* Se a Etiqueta estiver vazia, incapaz de fazer o método */
-            if (eti.isEmpty()) {
-                throw new Exception("Etiqueta Inesistente");
-            }
-
-            ArquivoTarefas tarefas = new ArquivoTarefas();
-            ArrayList<Tarefa> t = tarefas.read(eti.get(0));
-
-            if (!t.isEmpty())
-                throw new Exception("Tarefas existentes dentro desta etiqueta");
-
-            return super.delete(eti.get(0).getId()) ? arvoreB.delete(eti.get(0)) : false;
-        } catch (Exception e) {
-            System.out.println("Erro em deletar");
+            System.out.println("Erro ao atualizar a etiqueta:");
             System.out.println(e.getMessage());
         }
         return false;
     }
 
-    /* Listando as etiqueta */
+    /*
+     * Método para deletar uma etiqueta.
+     * Retorna true se excluída com sucesso.
+     */
+    public boolean delete(String nomeEtiqueta) throws Exception {
+        try {
+            System.out.println("Tentando deletar a etiqueta: " + nomeEtiqueta);
+
+            // Lendo na árvore B+
+            ParEtiquetaId parEtiquetaId = new ParEtiquetaId(nomeEtiqueta);
+            ArrayList<ParEtiquetaId> etiquetas = arvoreB.read(parEtiquetaId);
+
+            if (etiquetas.isEmpty()) {
+                System.out.println("Etiqueta não encontrada na árvore B+: " + nomeEtiqueta);
+                throw new Exception("Etiqueta inexistente");
+            }
+
+            System.out.println(
+                    "Etiqueta encontrada na árvore B+: " + etiquetas.get(0).getNome() + " com ID: "
+                            + etiquetas.get(0).getId());
+
+            // Verificando se há tarefas associadas
+            ArquivoTarefas arquivoTarefas = new ArquivoTarefas();
+            ArrayList<Tarefa> tarefas = arquivoTarefas.read(etiquetas.get(0));
+
+            if (!tarefas.isEmpty()) {
+                System.out.println("Não é possível excluir, pois existem tarefas associadas à etiqueta.");
+                throw new Exception("Tarefas existentes dentro desta etiqueta");
+            }
+
+            // Excluindo do arquivo e da árvore B+
+            return super.delete(etiquetas.get(0).getId()) ? arvoreB.delete(etiquetas.get(0)) : false;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao deletar a etiqueta:");
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    /*
+     * Método para listar todas as etiquetas.
+     * Retorna a lista de etiquetas.
+     */
     public ArrayList<Etiqueta> listar() throws Exception {
         ArrayList<Etiqueta> etiquetas = new ArrayList<>();
         try {
+            System.out.println("Listando todas as etiquetas...");
+
             etiquetas = super.list();
 
-            if (etiquetas.isEmpty())
-                throw new Exception("Etiqueta ainda não foram criadas");
-
-            for (int i = 0; i < etiquetas.size(); i++) {
-                System.out.println("Indice: " + etiquetas.get(i).getId() + " Nome da Etiqueta: "
-                        + etiquetas.get(i).getNome());
+            if (etiquetas.isEmpty()) {
+                System.out.println("Nenhuma etiqueta foi criada ainda.");
+                throw new Exception("Nenhuma etiqueta encontrada.");
             }
+
+            for (Etiqueta etiqueta : etiquetas) {
+                System.out.println("ID: " + etiqueta.getId() + " - Nome da Etiqueta: " + etiqueta.getNome());
+            }
+
         } catch (Exception e) {
+            System.out.println("Erro ao listar etiquetas:");
             System.out.println(e.getMessage());
         }
         return etiquetas;
     }
-
 }

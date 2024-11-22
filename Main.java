@@ -204,9 +204,6 @@ public class Main {
         System.out.println("Digite seu novo nome");
         t.setNome(scanf.nextLine());
 
-        // Evitando Buffer
-        scanf.nextLine();
-
         // Scanneando a Data de Inicio
         LocalDate data = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -223,9 +220,6 @@ public class Main {
             t.setInicio(data);
           }
         }
-
-        // Evitando Buffer
-        scanf.nextLine();
 
         data = null;
         // Scanneando a Data Final
@@ -544,11 +538,12 @@ public class Main {
 
         // Mostra as categorias disponíveis com seus índices
         for (int i = 0; i < categorias.size(); i++) {
-          System.out.println(i + " - " + categorias.get(i).getNome());
+          System.out.println((i + 1) + " - " + categorias.get(i).getNome());
         }
 
         // Lê o índice escolhido
         int index = scanf.nextInt();
+        index -= 1;
         while (index < 0 || index >= categorias.size()) {
           System.out.println("Digite um índice válido:");
           index = scanf.nextInt();

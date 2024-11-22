@@ -117,20 +117,22 @@ public class Tarefa implements Registro {
         ByteArrayInputStream bais = new ByteArrayInputStream(array);
         DataInputStream dis = new DataInputStream(bais);
         try {
-            this.id = dis.readInt();
-            this.nome = dis.readUTF();
-            this.inicio = LocalDate.ofEpochDay(dis.readInt());
-            this.fim = LocalDate.ofEpochDay(dis.readInt());
-            this.status = dis.readByte();
-            this.prioridade = dis.readByte();
-            this.idCategoria = dis.readInt();
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                this.idEtiquetas.add(dis.readInt());
-            }
+            this.id = dis.readInt(); // Lê o ID
+            this.nome = dis.readUTF(); // Lê o nome
+            this.inicio = LocalDate.ofEpochDay(dis.readInt()); // Lê a data de início
+            this.fim = LocalDate.ofEpochDay(dis.readInt()); // Lê a data de fim
+            this.status = dis.readByte(); // Lê o status
+            this.prioridade = dis.readByte(); // Lê a prioridade
+            this.idCategoria = dis.readInt(); // Lê o ID da categoria
 
+            // Lê a lista de etiquetas
+            int size = dis.readInt(); // Lê o tamanho da lista de etiquetas
+            this.idEtiquetas = new ArrayList<>(size); // Inicializa a lista com o tamanho correto
+            for (int i = 0; i < size; i++) {
+                this.idEtiquetas.add(dis.readInt()); // Lê cada ID de etiqueta e adiciona à lista
+            }
         } catch (Exception e) {
-            System.out.println("Deu bobs ao converter vetor de byte pra objeto tarefa");
+            System.out.println("Erro ao converter vetor de byte pra objeto tarefa");
             e.printStackTrace();
         }
     }
