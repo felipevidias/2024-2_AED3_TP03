@@ -5,6 +5,19 @@
 
 ---
 
+## Resumo 
+
+Este projeto implementa um sistema que permite buscas eficientes por tarefas e a categorização delas com rótulos, utilizando um relacionamento N:N entre tarefas e rótulos. As buscas e os relacionamentos foram otimizados com o uso de árvores B+ e listas invertidas, garantindo alta performance e integridade dos dados. 
+
+## Descrição Geral
+
+Este projeto desenvolve um sistema para gerenciamento de tarefas, com foco na implementação de buscas eficientes e na organização por rótulos. Foi criado um índice invertido que permite buscas por palavras utilizando a métrica TFxIDF, a qual ordena os resultados de forma relevante. Também foi implementado um relacionamento N:N entre tarefas e rótulos, além de um CRUD para rótulos, permitindo a manutenção das categorias utilizadas. Para garantir eficiência e consistência nos acessos aos dados, foram empregadas estruturas avançadas como árvores B+ e listas invertidas.
+
+Experiência de Desenvolvimento: 
+Durante o desenvolvimento deste trabalho prático, implementamos todos os requisitos especificados, utilizando estruturas de dados avançadas para assegurar a eficiência e integridade do sistema. As maiores dificuldades envolveram a implementação do índice invertido, especialmente no tratamento de stop words, no cálculo de TFxIDF e na integração com o sistema de buscas. Além disso, houve desafios ao gerenciar a adição e remoção de vínculos entre tarefas e rótulos.
+
+---
+
 ## Descrição de classes e métodos 
 
 ## Classe ArquivoEtiqueta
@@ -284,18 +297,6 @@ fromBytes(byte[] bytes): Reconstrói o objeto Tarefa a partir de um array de byt
 exibirTarefa(): Exibe as informações da tarefa, incluindo o nome da categoria vinculada, se disponível.
 
 ---
-
-## Resumo 
-
-Este projeto implementa um sistema que permite buscas eficientes por tarefas e a categorização delas com rótulos, utilizando um relacionamento N:N entre tarefas e rótulos. As buscas e os relacionamentos foram otimizados com o uso de árvores B+ e listas invertidas, garantindo alta performance e integridade dos dados. 
-
-## Descrição Geral
-
-Este projeto desenvolve um sistema para gerenciamento de tarefas, com foco na implementação de buscas eficientes e na organização por rótulos. Foi criado um índice invertido que permite buscas por palavras utilizando a métrica TFxIDF, a qual ordena os resultados de forma relevante. Também foi implementado um relacionamento N:N entre tarefas e rótulos, além de um CRUD para rótulos, permitindo a manutenção das categorias utilizadas. Para garantir eficiência e consistência nos acessos aos dados, foram empregadas estruturas avançadas como árvores B+ e listas invertidas.
-
-Experiência de Desenvolvimento: 
-Durante o desenvolvimento deste trabalho prático, implementamos todos os requisitos especificados, utilizando estruturas de dados avançadas para assegurar a eficiência e integridade do sistema. As maiores dificuldades envolveram a implementação do índice invertido, especialmente no tratamento de stop words, no cálculo de TFxIDF e na integração com o sistema de buscas. Além disso, houve desafios ao gerenciar a adição e remoção de vínculos entre tarefas e rótulos.
-
 ## Checklist
 
 - O índice invertido com os termos das tarefas foi criado usando a classe ListaInvertida? Sim
